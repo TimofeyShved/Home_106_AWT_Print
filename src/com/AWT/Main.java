@@ -10,24 +10,24 @@ import java.awt.print.PrinterJob;
 public class Main {
 
     public static void main(String[] args) throws PrinterException {
-        Printable printable = new Printable() {
+        Printable printable = new Printable() { // интерфейс Printable
             @Override
-            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-                if (pageIndex==0){
-                    Graphics2D graphics2D =(Graphics2D)graphics;
-                    Line2D line2D = new Line2D.Double(0,0,100,100);
-                    graphics2D.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-                    graphics2D.draw(line2D);
-                    return PAGE_EXISTS;
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {  // получаем графику, параметры страницы и номер сраницы
+                if (pageIndex==0){ // если не последняя страница, печятем
+                    Graphics2D graphics2D =(Graphics2D)graphics; // графика
+                    Line2D line2D = new Line2D.Double(0,0,100,100); // линия
+                    graphics2D.translate(pageFormat.getImageableX(), pageFormat.getImageableY());// перевести в координаты формата
+                    graphics2D.draw(line2D); // отрисовать
+                    return PAGE_EXISTS; // печятаем
                 }
-                return NO_SUCH_PAGE;
+                return NO_SUCH_PAGE; // останавливаем печать
             }
         };
 
-        PrinterJob Job = PrinterJob.getPrinterJob();
-        Job.setPrintable(printable);
-        if (Job.printDialog()){
-            Job.print();
+        PrinterJob Job = PrinterJob.getPrinterJob(); // то что будет печятать
+        Job.setPrintable(printable); // засовываем туда нашу картинку
+        if (Job.printDialog()){ // вызываем диалог
+            Job.print(); // печятаем
         }
 
     }
